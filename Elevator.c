@@ -45,6 +45,7 @@ void ChangeFloor(int start, int size, int floors[], int * list)
 int * AssignFloors(int numOfFloors) 
 {
 	int * list;
+	
 
 	//Clear/allocate memory for a list array
 	list = calloc(numOfFloors, sizeof(int));
@@ -70,6 +71,20 @@ int * AssignFloors(int numOfFloors)
 		}
 	}
 
+	//Organize the array by least to greatest
+	for(int first = 0; first < numOfFloors; first++) 
+	{
+		for(int second = first + 1; second < numOfFloors; second++)
+		{
+			if(*(list + first) > *(list + second))
+			{
+				int hold = *(list + first);
+				*(list + first) = *(list + second);
+				*(list + second) = hold;
+			}
+		}
+	}
+
 	return list;
 }
 
@@ -88,11 +103,10 @@ int main()
 
 		//Used to determine the size of the array
 		scanf("%d", &numOfFloors);
-
 		//floorList points to an array of size numOfFloors
 		int * floorList = AssignFloors(numOfFloors);
 
-		
+
 
 		//Text showing the changing of floors
 		ChangeFloor(currentFloor, numOfFloors, floors, floorList);
@@ -114,3 +128,4 @@ int main()
 
 	return 0;
 }
+
